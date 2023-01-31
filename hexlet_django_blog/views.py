@@ -11,17 +11,25 @@ class IndexView(TemplateView):
         return context
 
 
-def index(request):
-    url = reverse(
-        'article',
-        kwargs={'tags': 'python', 'article_id': 42}
-    )
-    return redirect(url)
+class AboutView(TemplateView):
+    template_name = 'about.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = ['обучение', 'програмирование', 'python', 'oop']
+        return context
 
 
-def about(request):
-    tags = ['обучение', 'програмирование', 'python', 'oop']
-    return render(
-        request,
-        'about.html',
-        context={'tags': tags})
+# def index(request):
+#     url = reverse(
+#         'article',
+#         kwargs={'tags': 'python', 'article_id': 42}
+#     )
+#     return redirect(url)
+
+
+# def about(request):
+#     tags = ['обучение', 'програмирование', 'python', 'oop']
+#     return render(
+#         request,
+#         'about.html',
+#         context={'tags': tags})

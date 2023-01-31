@@ -1,9 +1,10 @@
 from django.urls import path
-from hexlet_django_blog.article.views import IndexView, ArticleView
+from .views import IndexView, ArticleView, AticleFormCreateView
 
 app_name = 'articles'
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('<int:id>/', ArticleView.as_view(), name='article'),
+    path('create/', AticleFormCreateView.as_view(), name='create'),
 ]

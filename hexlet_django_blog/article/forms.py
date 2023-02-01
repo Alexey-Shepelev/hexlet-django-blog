@@ -6,7 +6,7 @@ class ArticleForm(ModelForm):
     class Meta:
         model = Article
         fields = ['name', 'body']
-        lables = {
+        labels = {
             'name': 'Название',
             'body': 'Инфо',
         }

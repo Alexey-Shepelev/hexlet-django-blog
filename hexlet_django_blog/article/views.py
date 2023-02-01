@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.http import HttpResponse
 from django.views import View
 
@@ -6,6 +7,8 @@ from .models import Article
 from .forms import ArticleForm
 
 # Create your views here.
+
+
 class IndexView(View):
 
     def get(self, request, *args, **kwargs):
@@ -24,7 +27,7 @@ class ArticleView(View):
         })
 
 
-class AticleFormCreateView(View):
+class ArticleFormCreateView(View):
 
     def get(self, request, *args, **kwargs):
         form = ArticleForm()
@@ -34,8 +37,32 @@ class AticleFormCreateView(View):
         form = ArticleForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.SUCCESS,
+                                 'Статья успешно создана.')
             return redirect('articles:index')
         return render(request, 'articles/create.html', {'form': form})
+
+
+class ArticleFormEditView(View):
+
+    def get(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(instance=article)
+        return render(request, 'articles/update.html', {
+            'form': form, 'article_id': article_id})
+
+    def post(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS,
+                                 'Статья успешно обновлена.')
+            return redirect('articles:index')
+        return render(request, 'articles/update.html', {
+            'form': form, 'article_id': article_id})
 
 # def index(request, tags, article_id):
 #     return HttpResponse(f'Статья номер {article_id}. Тег {tags}')

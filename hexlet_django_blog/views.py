@@ -5,6 +5,7 @@ from django.urls import reverse
 
 class IndexView(TemplateView):
     template_name = "index.html"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['who'] = 'World'
@@ -13,9 +14,10 @@ class IndexView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = 'about.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tags'] = ['обучение', 'програмирование', 'python', 'oop']
+        context['tags'] = ['обучение', 'программирование', 'python', 'oop']
         return context
 
 
@@ -28,7 +30,7 @@ class AboutView(TemplateView):
 
 
 # def about(request):
-#     tags = ['обучение', 'програмирование', 'python', 'oop']
+#     tags = ['обучение', 'программирование', 'python', 'oop']
 #     return render(
 #         request,
 #         'about.html',

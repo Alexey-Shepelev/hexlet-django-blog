@@ -64,5 +64,17 @@ class ArticleFormEditView(View):
         return render(request, 'articles/update.html', {
             'form': form, 'article_id': article_id})
 
+
+class ArticleFormDeleteView(View):
+
+    def post(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        if article:
+            article.delete()
+            messages.add_message(request, messages.SUCCESS,
+                                 'Статья %s успешно удалена.' % article.name)
+        return redirect('articles:index')
+
 # def index(request, tags, article_id):
 #     return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
